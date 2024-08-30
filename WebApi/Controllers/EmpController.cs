@@ -41,7 +41,7 @@ namespace WebApi.Controllers
 		public IActionResult DeleteEmp(int id ) 
 		{
 			 var data = db.Emp.Find(id);
-			 db.Remove(data);
+			   db.Remove(data);
 			db.SaveChanges();
 			return Ok("Emp Deleted Successfully");
 		}
