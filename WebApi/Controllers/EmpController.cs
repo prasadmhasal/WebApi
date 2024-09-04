@@ -29,7 +29,7 @@ namespace WebApi.Controllers
 		}
         [Route("AddEmpMul")]
         [HttpPost]
-        public IActionResult AddEmpMul(List<Emp> e)
+        public IActionResult AddEmpMul([FromForm] List<Emp> e)
         {
 			foreach (Emp emp in e)
 			{
@@ -70,6 +70,15 @@ namespace WebApi.Controllers
 			db.SaveChanges();
 			
 			return Ok("Emp Deleted Successfully");
+		}
+
+        [Route("Edit")]
+        [HttpPut]
+		public IActionResult Edit(Emp e)
+		{
+			db.Emp.Update(e);
+			db.SaveChanges();
+			return Ok("Successfully Updated");
 		}
 	}
 }
