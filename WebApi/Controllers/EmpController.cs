@@ -27,8 +27,21 @@ namespace WebApi.Controllers
 			return Ok("Emp Added Successfully !!");
 
 		}
+        [Route("AddEmpMul")]
+        [HttpPost]
+        public IActionResult AddEmpMul(List<Emp> e)
+        {
+			foreach (Emp emp in e)
+			{
+                db.Emp.Add(emp);
+                db.SaveChanges();
+            }
+            
+            return Ok("Emp Added Successfully !!");
 
-		[Route("GetEmp")]
+        }
+
+        [Route("GetEmp")]
 		[HttpGet]
 		public IActionResult GetEmp() 
 		{
@@ -36,13 +49,26 @@ namespace WebApi.Controllers
 			return Ok(data);
 
 		}
-		[Route("DeleteEmp")]
+		[Route("DeleteEmp/{id}")]
 		[HttpDelete]
 		public IActionResult DeleteEmp(int id ) 
 		{
 			 var data = db.Emp.Find(id);
-			   db.Remove(data);
+			  db.Emp.Remove(data);
 			db.SaveChanges();
+			return Ok("Emp Deleted Successfully");
+		}
+
+		[Route("DeleteEmpMul")]
+		[HttpDelete]
+		public IActionResult DeleteEmpMul(List<int> id ) 
+		{
+
+			
+			 var data = db.Emp.Where(x=>id.Contains(x.Id)).ToList();
+			  db.Emp.RemoveRange(data);
+			db.SaveChanges();
+			
 			return Ok("Emp Deleted Successfully");
 		}
 	}
